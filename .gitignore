@@ -1,0 +1,26 @@
+# Tracker files (personal job application data)
+*TRACKER*
+*tracker*.txt
+*tracker*.csv
+
+# JD files (scraped job descriptions)
+NGO_JD_FILES/
+
+# Config files
+config.yaml
+.env
+.env.local
+
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Backups
+*.bak
+*.bak.*
