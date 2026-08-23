@@ -3,7 +3,7 @@
 ## Session: AGENT (GLM 5.2) orchestrator + AGENT (DeepSeek V4 Flash) scanner
 
 **Date**: 2026-07-04
-**Method**: Hermes2 ran SearXNG queries + ReliefWeb browser extraction; Hermes3 scored and wrote tracker
+**Method**: AGENT ran SearXNG queries + ReliefWeb browser extraction; AGENT scored and wrote tracker
 **Yield**: 9 JD files, 4 new tracker entries (scores 80-92), 5 excluded
 
 ---
@@ -18,21 +18,21 @@
 
 ### Dispatch Protocol
 1. Orchestrator (AGENT) prepares dispatch prompt with exact SearXNG queries, filter rules, JD file naming convention, and output directory
-2. Verify Hermes2 is at `─ ready │` prompt BEFORE dispatching (see FORWARD skill pitfall 2026-07-04)
+2. Verify AGENT is at `─ ready │` prompt BEFORE dispatching (see FORWARD skill pitfall 2026-07-04)
 3. Send via 3-step cmux sequence: `cmux send --workspace <UUID> "$(cat /tmp/h2_prompt.txt)"` → `cmux send --workspace <UUID> "\n"` → `cmux send-key --workspace <UUID> Enter`
 4. Monitor every 60-90s via `cmux capture-pane --workspace <UUID> --scrollback --lines 50`
-5. Hermes2 replies back to orchestrator's workspace UUID when done
+5. AGENT replies back to orchestrator's workspace UUID when done
 6. Orchestrator reads saved JD files, scores each, rebuilds tracker
 
 ### What Worked Well
-- Hermes2 autonomously pivoted from dead SearXNG to direct ReliefWeb browsing (92 results scanned)
-- Hermes2 correctly filtered: skipped Ukraine roles, junior positions, non-ICT roles
-- Hermes2 saved full JD text files (not just snippets) for accurate scoring
-- Hermes2 wrote a comprehensive _SCAN_SUMMARY.txt with all metadata
-- Orchestrator loaded CV repository + scoring engine while Hermes2 worked in parallel
+- AGENT autonomously pivoted from dead SearXNG to direct ReliefWeb browsing (92 results scanned)
+- AGENT correctly filtered: skipped Ukraine roles, junior positions, non-ICT roles
+- AGENT saved full JD text files (not just snippets) for accurate scoring
+- AGENT wrote a comprehensive _SCAN_SUMMARY.txt with all metadata
+- Orchestrator loaded CV repository + scoring engine while AGENT worked in parallel
 
 ### What Could Be Better
-- Initial dispatch was lost because Hermes2 was mid-task (busy with a previous UNTalent scan) — see FORWARD pitfall
+- Initial dispatch was lost because AGENT was mid-task (busy with a previous UNTalent scan) — see FORWARD pitfall
 - All SearXNG engines were down (Brave/DDG/Startpage/KarmaSearch all CAPTCHA'd/suspended) — ReliefWeb is the reliable fallback
 - Google engine returned 0 results with no error (silently rate-limited, not marked as unresponsive)
 - Bing engine worked for generic queries but returned non-NGO results (Croatia NGO directories, Wikipedia)

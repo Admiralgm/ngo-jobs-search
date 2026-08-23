@@ -21,7 +21,7 @@ Autonomous agent that scans the web for NGO sector vacancies matching User's sen
 
 **This skill handles:** NGO staff/contract positions, senior advisory roles, ICT/Digital leads, programme management with tech components, expert consulting for NGOs.
 
-**Does NOT handle:** UN/IO permanent staff roles (P-3+, fixed-term) — those go to `un-jobs-search-minimaltoken`. Does NOT handle freelance consulting — those go to `freelance-consulting-search`.
+**Does NOT handle:** UN/IO permanent staff roles (P-3+, fixed-term) — those go to `un-jobs-search`. Does NOT handle freelance consulting — those go to `freelance-consulting-search`.
 
 ---
 
@@ -81,7 +81,7 @@ Template reference: `~/Downloads/DATA_REPOSITORY/UN_SECTOR_VACCANCIES_TEMPLATE.t
 
 - **MASTER DATABASE (2026-05-27):** `~/CV_REPOSITORY_DATABASE.md` — Load via `skill_view(name='cv-repository')`.
 - **Profile Skill:** `skill_view(name='cv-repository')` — Retrieval protocol, TAGS reference, key metrics
-- **Scoring:** `skill_view(name='vacancy-compatibility-scoring-engine')` — MUST use for all scoring, requires FULL JD
+- **Scoring:** `skill_view(name='vaccancy-compatibility-scoring-engine')` — MUST use for all scoring, requires FULL JD
 - Expertise: AI Product Leadership | LLMs, Agentic Systems, RAG | ICT/Telecom (4G/5G/FTTX/GPON/WIFI) | Digital Transformation | ISP/MVNO/MVNE | Payment Systems | Tech Due Diligence ($500M+) | UN/Africa/EU Advisory
 - **Nationality: EU citizen (Czech Republic)** — qualifies for ALL EU-funded positions, tenders, and framework contracts
 - **Nationality: Serbian** — qualifies for Serbian nationals-only positions
@@ -222,9 +222,9 @@ If Camoufox were working, navigate to `https://reliefweb.int/jobs?search=ICT+OR+
 
 ## 🧠 SCORING MODEL
 
-**MUST use `vacancy-compatibility-scoring-engine`** for all scoring with FULL JD.
+**MUST use `vaccancy-compatibility-scoring-engine`** for all scoring with FULL JD.
 
-1. Load the scoring engine: `skill_view(name='vacancy-compatibility-scoring-engine')`
+1. Load the scoring engine: `skill_view(name='vaccancy-compatibility-scoring-engine')`
 2. Load CV Repository for evidence: `skill_view(name='cv-repository')` + `read_file(path='~/CV_REPOSITORY_DATABASE.md')`
 3. Extract the full job description from the NGO portal (never score from title alone)
 4. Apply the 7-parameter scoring framework (P1–P7, max 100)
@@ -278,7 +278,7 @@ After every write, verify ALL of:
 2. Ensure SearXNG is running
 3. Read existing `NGO_JOBS_TRACKER.TXT`
 4. Extract all existing Vacancy IDs for dedup
-5. Load skills: `tracker-file-format`, `cv-repository`, `vacancy-compatibility-scoring-engine`
+5. Load skills: `tracker-file-format`, `cv-repository`, `vaccancy-compatibility-scoring-engine`
 
 ### Phase 2: Portal Discovery — ReliefWeb Browser Extraction (Primary)
 1. Navigate to `https://reliefweb.int/jobs?search=ICT+OR+digital+OR+telecom+OR+information+technology`
@@ -295,7 +295,7 @@ Discard expired or inaccessible entries.
 ### Phase 4: Score & Filter
 1. Run hard filters first
 2. For surviving entries: load full JD from portal
-3. Score using `vacancy-compatibility-scoring-engine` (7-parameter model)
+3. Score using `vaccancy-compatibility-scoring-engine` (7-parameter model)
 4. Deduplicate against existing entries by (title.lower(), org.lower())
 
 ### Phase 4b: PRE-SAVE EXPIRATION CHECK — MANDATORY
@@ -428,4 +428,4 @@ When the user asks to add a new NGO to the scan list:
 - **UN-JOBS-SEARCH:** UN/IO permanent/FT staff roles (P-3+, fixed-term), UN agency consultancy
 - **FREELANCE-CONSULTING-SEARCH:** Non-UN freelancing, IFI procurement, development consulting firms
 - **Overlap:** Impactpool spans all three — entries classified by source organization type
-- **Scoring:** ALL skills use `vacancy-compatibility-scoring-engine` for every evaluation
+- **Scoring:** ALL skills use `vaccancy-compatibility-scoring-engine` for every evaluation
